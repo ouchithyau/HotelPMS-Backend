@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace HotelPMS.Domain.Enums;
 
-namespace HotelPMS.Domain.Enums
+public enum RoomStatus
 {
-    internal class RoomStatus
-    {
-    }
+    Available,
+    Occupied,
+    Cleaning,
+    Maintenance
 }

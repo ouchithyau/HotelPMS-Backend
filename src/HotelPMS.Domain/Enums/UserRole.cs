@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace HotelPMS.Domain.Enums;
 
-namespace HotelPMS.Domain.Enums
+public enum UserRole
 {
-    internal class UserRole
-    {
-    }
+    Admin,
+    Receptionist,
+    Housekeeper
 }

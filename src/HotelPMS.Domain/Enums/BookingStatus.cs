@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace HotelPMS.Domain.Enums;
 
-namespace HotelPMS.Domain.Enums
+public enum BookingStatus
 {
-    internal class BookingStatus
-    {
-    }
+    Pending,
+    Confirmed,
+    CheckedIn,
+    CheckedOut,
+    Cancelled
 }
