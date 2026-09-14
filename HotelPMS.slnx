@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/HotelPMS.API/HotelPMS.API.csproj" />
+    <Project Path="src/HotelPMS.Application/HotelPMS.Application.csproj" />
+    <Project Path="src/HotelPMS.Domain/HotelPMS.Domain.csproj" />
+    <Project Path="src/HotelPMS.Infrastructure/HotelPMS.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/HotelPMS.UnitTests/HotelPMS.UnitTests.csproj" />
+  </Folder>
+</Solution>
