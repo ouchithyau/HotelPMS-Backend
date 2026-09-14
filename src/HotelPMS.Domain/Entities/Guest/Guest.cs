@@ -1,10 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using HotelPMS.Domain.Common;
 
-namespace HotelPMS.Domain.Entities.Guest
+namespace HotelPMS.Domain.Entities;
+
+public class Guest : BaseAuditableEntity
 {
-    internal class Guest
-    {
-    }
+    public string FullName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string PhoneNumber { get; set; } = string.Empty;
+    public string IdentificationNumber { get; set; } = string.Empty; // NIC or Passport
+    public string Address { get; set; } = string.Empty;
+
+    public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 }

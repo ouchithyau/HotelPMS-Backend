@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace HotelPMS.Domain.Exceptions;
 
-namespace HotelPMS.Domain.Exceptions
+public class DomainException : Exception
 {
-    internal class DomainException
+    public DomainException(string message) : base(message)
+    {
+    }
+
+    public DomainException(string message, Exception innerException) : base(message, innerException)
     {
     }
 }

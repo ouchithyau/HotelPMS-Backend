@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace HotelPMS.Domain.Enums;
 
-namespace HotelPMS.Domain.Enums
+public enum PaymentStatus
 {
-    internal class PaymentStatus
-    {
-    }
+    Pending,
+    Paid,
+    Refunded
 }
