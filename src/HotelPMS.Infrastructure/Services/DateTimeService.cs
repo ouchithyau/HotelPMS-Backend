@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using HotelPMS.Application.Common.Interfaces;
 
-namespace HotelPMS.Infrastructure.Services
+namespace HotelPMS.Infrastructure.Services;
+
+public class DateTimeService : IDateTime
 {
-    internal class DateTimeService
-    {
-    }
+    public DateTime Now => DateTime.Now;
+    public DateTime UtcNow => DateTime.UtcNow;
 }
