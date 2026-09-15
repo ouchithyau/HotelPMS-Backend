@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace HotelPMS.Application.Common.Interfaces;
 
-namespace HotelPMS.Application.Common.Interfaces
+public interface IDateTime
 {
-    internal interface IDateTime
-    {
-    }
+    DateTime Now { get; }
+    DateTime UtcNow { get; }
 }
