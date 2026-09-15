@@ -1,4 +1,5 @@
 using MediatR;
+using HotelPMS.Domain.Entities;
 
 namespace HotelPMS.Application.Features.Rooms.Queries.GetRoomById;
 
