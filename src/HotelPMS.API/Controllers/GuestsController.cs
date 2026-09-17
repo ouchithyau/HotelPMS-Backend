@@ -1,9 +1,15 @@
-﻿using HotelPMS.Application.Features.Guests.Commands.CreateGuest;
+﻿using HotelPMS.Application.Features.Guests.Commands.AddPreference;
+using HotelPMS.Application.Features.Guests.Commands.BlacklistGuest;
+using HotelPMS.Application.Features.Guests.Commands.CreateGuest;
 using HotelPMS.Application.Features.Guests.Commands.DeleteGuest;
 using HotelPMS.Application.Features.Guests.Commands.UpdateGuest;
+using HotelPMS.Application.Features.Guests.Commands.UpdateLoyalty;
+using HotelPMS.Application.Features.Guests.Commands.VerifyDocument;
 using HotelPMS.Application.Features.Guests.Queries.GetActiveStay;
 using HotelPMS.Application.Features.Guests.Queries.GetGuestBookingHistory;
 using HotelPMS.Application.Features.Guests.Queries.GetGuests;
+using HotelPMS.Application.Features.Guests.Queries.GetLoyalty;
+using HotelPMS.Application.Features.Guests.Queries.GetSpendAnalytics;
 using HotelPMS.Application.Features.Guests.Queries.SearchGuests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -71,5 +77,47 @@ public class GuestsController : ControllerBase
     {
         var result = await _mediator.Send(new DeleteGuestCommand(id));
         return Ok(new { success = result, message = "Guest deactivated successfully." });
+    }
+    [HttpPost("{id}/blacklist")]
+    [Authorize(Roles = "Admin,SecurityManager,GeneralManager")]
+    public async Task<IActionResult> BlacklistGuest(Guid id, [FromBody] BlacklistGuestCommand command)
+    {
+        var result = await _mediator.Send(command with { GuestId = id });
+        return Ok(new { success = result, message = "Guest has been successfully added to the security blacklist." });
+    }
+    [HttpPost("{id}/preferences")]
+    [Authorize(Roles = "Admin,Manager,Receptionist,Concierge")]
+    public async Task<IActionResult> AddGuestPreference(Guid id, [FromBody] AddGuestPreferenceCommand command)
+    {
+        var result = await _mediator.Send(command with { GuestId = id });
+        return Ok(new { success = result, message = "Guest preference successfully recorded." });
+    }
+    [HttpGet("{id}/loyalty-tier")]
+    [Authorize(Roles = "Admin,Manager,Receptionist")]
+    public async Task<IActionResult> GetGuestLoyalty(Guid id)
+    {
+        var result = await _mediator.Send(new GetGuestLoyaltyQuery(id));
+        return Ok(result);
+    }
+    [HttpPost("{id}/loyalty-tier")]
+    [Authorize(Roles = "Admin,Manager")]
+    public async Task<IActionResult> UpdateGuestLoyalty(Guid id, [FromBody] UpdateLoyaltyTierCommand command)
+    {
+        var result = await _mediator.Send(command with { GuestId = id });
+        return Ok(new { success = result, message = "Guest loyalty tier and points updated successfully." });
+    }
+    [HttpPost("{id}/document-verify")]
+    [Authorize(Roles = "Admin,Manager,Receptionist")]
+    public async Task<IActionResult> VerifyGuestDocument(Guid id, [FromBody] VerifyGuestDocumentCommand command)
+    {
+        var result = await _mediator.Send(command with { GuestId = id });
+        return Ok(new { success = result, message = "Guest identification document successfully verified and logged for legal compliance." });
+    }
+    [HttpGet("{id}/spend-analytics")]
+    [Authorize(Roles = "Admin,Manager,FinanceManager")]
+    public async Task<IActionResult> GetGuestSpendAnalytics(Guid id)
+    {
+        var result = await _mediator.Send(new GetGuestSpendAnalyticsQuery(id));
+        return Ok(result);
     }
 }
