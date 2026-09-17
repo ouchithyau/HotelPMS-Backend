@@ -6,9 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Common\Behaviours\" />
-    <Folder Include="DTOs\" />
     <Folder Include="Features\Guests\" />
-    <Folder Include="Features\Billing\" />
     <Folder Include="Features\Housekeeping\" />
     <Folder Include="Features\Reservations\" />
     <Folder Include="Features\Rooms\" />
