@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Behaviours\" />
-    <Folder Include="Features\Reservations\" />
     <Folder Include="Features\Rooms\" />
     <Folder Include="Features\RoomTypes\" />
   </ItemGroup>

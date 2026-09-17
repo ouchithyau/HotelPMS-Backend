@@ -12,4 +12,8 @@ public class InvoiceDto
     public decimal TotalAmount { get; set; }
     public string PaymentStatus { get; set; } = string.Empty;
     public DateTime IssuedAt { get; set; } = DateTime.UtcNow;
+    public decimal ExtraServiceCharges { get; set; }
+    public decimal TaxAmount { get; set; }
+    public decimal TotalBalance { get; set; }
+    public bool IsPaid { get; set; }
 }
