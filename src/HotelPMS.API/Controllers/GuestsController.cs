@@ -1,9 +1,13 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using HotelPMS.Application.Features.Guests.Commands.CreateGuest;
+﻿using HotelPMS.Application.Features.Guests.Commands.CreateGuest;
+using HotelPMS.Application.Features.Guests.Commands.DeleteGuest;
 using HotelPMS.Application.Features.Guests.Commands.UpdateGuest;
-using HotelPMS.Application.Features.Guests.Queries.GetGuests;
+using HotelPMS.Application.Features.Guests.Queries.GetActiveStay;
 using HotelPMS.Application.Features.Guests.Queries.GetGuestBookingHistory;
+using HotelPMS.Application.Features.Guests.Queries.GetGuests;
+using HotelPMS.Application.Features.Guests.Queries.SearchGuests;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HotelPMS.API.Controllers;
 
@@ -42,5 +46,30 @@ public class GuestsController : ControllerBase
         if (id != command.Id) return BadRequest("ID mismatch");
         await _mediator.Send(command);
         return NoContent();
+    }
+
+    [HttpGet("search")]
+    [Authorize]
+    public async Task<IActionResult> SearchGuests([FromQuery] string searchTerm)
+    {
+        var result = await _mediator.Send(new SearchGuestsQuery(searchTerm));
+        return Ok(result);
+    }
+
+    [HttpGet("{id}/active-stay")]
+    [Authorize]
+    public async Task<IActionResult> GetActiveStay(Guid id)
+    {
+        var result = await _mediator.Send(new GetActiveStayQuery(id));
+        if (result == null) return NotFound("No active stay found for this guest.");
+        return Ok(result);
+    }
+
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin,Manager")]
+    public async Task<IActionResult> DeleteGuest(Guid id)
+    {
+        var result = await _mediator.Send(new DeleteGuestCommand(id));
+        return Ok(new { success = result, message = "Guest deactivated successfully." });
     }
 }
