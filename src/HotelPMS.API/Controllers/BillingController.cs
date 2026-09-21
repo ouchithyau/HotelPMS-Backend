@@ -139,6 +139,7 @@ public class BillingController : ControllerBase
     }
     [HttpPost("pos-charge")]
     [Authorize(Roles = "Admin,Cashier,RestaurantManager,FrontOfficeManager")]
+    [Authorize(Policy = "CanAccessBilling")]
     public async Task<IActionResult> PostPosCharge([FromBody] PosChargeSyncDto chargeDto)
     {
         var command = new PostPosChargeToFolioCommand(chargeDto);

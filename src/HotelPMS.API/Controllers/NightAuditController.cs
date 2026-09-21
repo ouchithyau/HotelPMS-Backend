@@ -18,6 +18,7 @@ public class NightAuditController : ControllerBase
 
     [HttpPost("run")]
     [Authorize(Roles = "Admin,NightAuditor,FinanceManager")]
+    [Authorize(Policy = "CanRunNightAudit")]
     public async Task<IActionResult> RunNightAudit([FromBody] RunNightAuditCommand command)
     {
         var result = await _mediator.Send(command);
