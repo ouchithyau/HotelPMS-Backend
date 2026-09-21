@@ -1,9 +1,12 @@
-﻿using HotelPMS.Application.Features.Billing.Commands.AddExtraService;
+﻿using HotelPMS.Application.DTOs;
+using HotelPMS.Application.Features.Billing.Commands.AddExtraService;
 using HotelPMS.Application.Features.Billing.Commands.AdjustCharge;
 using HotelPMS.Application.Features.Billing.Commands.ApplyDiscount;
 using HotelPMS.Application.Features.Billing.Commands.CheckInBooking;
 using HotelPMS.Application.Features.Billing.Commands.CheckOutAndPay;
 using HotelPMS.Application.Features.Billing.Commands.CityLedger;
+using HotelPMS.Application.Features.Billing.Commands.Payment;
+using HotelPMS.Application.Features.Billing.Commands.PosCharge;
 using HotelPMS.Application.Features.Billing.Commands.RecordPayment;
 using HotelPMS.Application.Features.Billing.Commands.Refund;
 using HotelPMS.Application.Features.Billing.Commands.SplitFolio;
@@ -133,5 +136,22 @@ public class BillingController : ControllerBase
     {
         var result = await _mediator.Send(new GetDailyRevenueSummaryQuery(businessDate));
         return Ok(result);
+    }
+    [HttpPost("pos-charge")]
+    [Authorize(Roles = "Admin,Cashier,RestaurantManager,FrontOfficeManager")]
+    public async Task<IActionResult> PostPosCharge([FromBody] PosChargeSyncDto chargeDto)
+    {
+        var command = new PostPosChargeToFolioCommand(chargeDto);
+        var result = await _mediator.Send(command);
+        return Ok(new { success = result, message = "POS outlet charge successfully posted to guest room folio." });
+    }
+
+    [HttpPost("process-card-payment")]
+    [Authorize(Roles = "Admin,Cashier,FinanceManager")]
+    public async Task<IActionResult> ProcessCardPayment([FromBody] TokenizedPaymentDto paymentDto)
+    {
+        var command = new ProcessTokenizedPaymentCommand(paymentDto);
+        var result = await _mediator.Send(command);
+        return Ok(new { success = result, message = "Tokenized credit card payment processed successfully via payment gateway." });
     }
 }
